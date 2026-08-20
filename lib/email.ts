@@ -1,29 +1,17 @@
 import nodemailer from 'nodemailer';
 import QRCode from 'qrcode';
 
-// Test Account from Ethereal Email (will print a URL to preview emails in console)
-let transporter: nodemailer.Transporter | null = null;
-
-async function getTransporter() {
-  if (!transporter) {
-    const testAccount = await nodemailer.createTestAccount();
-    transporter = nodemailer.createTransport({
-      host: testAccount.smtp.host,
-      port: testAccount.smtp.port,
-      secure: testAccount.smtp.secure,
-      auth: {
-        user: testAccount.user,
-        pass: testAccount.pass,
-      },
-    });
-  }
-  return transporter;
-}
+// Create transporter using real email credentials from environment variables
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
 export async function generateQRAndSendEmail(ticket: { id: string; name: string; email: string }) {
   try {
-    const tp = await getTransporter();
-
     // Generate QR Code data URL with the verification link
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     const qrDataUrl = await QRCode.toDataURL(`${baseUrl}/verify?id=${ticket.id}`, {
@@ -32,7 +20,7 @@ export async function generateQRAndSendEmail(ticket: { id: string; name: string;
     });
 
     // Send Email
-    const info = await tp.sendMail({
+    const info = await transporter.sendMail({
       from: '"Felicity Event" <tickets@felicity.com>',
       to: ticket.email,
       subject: '🎫 Your Ticket for Felicity 2026',
@@ -65,8 +53,7 @@ export async function generateQRAndSendEmail(ticket: { id: string; name: string;
       ],
     });
 
-    console.log('Ticket email sent! Preview URL: %s', nodemailer.getTestMessageUrl(info));
-    return nodemailer.getTestMessageUrl(info);
+    console.log('Ticket email sent to:', ticket.email);
   } catch (error) {
     console.error('Failed to send email:', error);
   }
