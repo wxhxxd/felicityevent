@@ -42,59 +42,80 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-8">
-      <main className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
-        <h1 className="text-3xl font-bold text-center mb-6">Get Your Ticket</h1>
-        
-        {error && (
-          <div className="bg-red-50 text-red-600 p-4 rounded-lg mb-6">
-            {error}
-          </div>
-        )}
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center p-8 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black z-0"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-fuchsia-600 rounded-full mix-blend-multiply filter blur-[128px] opacity-20 z-0"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-600 rounded-full mix-blend-multiply filter blur-[128px] opacity-20 z-0"></div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-            <input 
-              name="name"
-              type="text" 
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-black"
-              placeholder="John Doe"
-            />
+        <div className="relative z-10 w-full max-w-md mx-auto mt-10">
+          <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl shadow-2xl p-8">
+            <div className="text-center mb-8">
+              <h1 className="text-4xl font-black text-white mb-2 tracking-tight">Secure Your Spot</h1>
+              <p className="text-gray-400">Fill in your details to grab your ticket.</p>
+            </div>
+
+            {error && (
+              <div className="bg-red-500/10 border border-red-500/50 text-red-400 p-4 rounded-xl mb-6 text-sm">
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-fuchsia-500 transition-all"
+                  placeholder="John Doe"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
+                  placeholder="john@example.com"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Phone Number</label>
+                <input
+                  type="tel"
+                  required
+                  value={formData.phone}
+                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+                  placeholder="+91 9876543210"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full relative group overflow-hidden rounded-xl p-[1px]"
+              >
+                <span className="absolute inset-0 bg-gradient-to-r from-fuchsia-500 via-purple-500 to-cyan-500 opacity-70 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></span>
+                <div className="relative bg-black px-8 py-4 rounded-xl transition-all duration-300 group-hover:bg-opacity-0">
+                  <span className="font-bold text-white text-lg">
+                    {loading ? 'Processing...' : 'Proceed to Payment (₹300)'}
+                  </span>
+                </div>
+              </button>
+            </form>
           </div>
           
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-            <input 
-              name="email"
-              type="email" 
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-black"
-              placeholder="john@example.com"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-            <input 
-              name="phone"
-              type="tel" 
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-black"
-              placeholder="9876543210"
-            />
-          </div>
-
-          <button 
-            type="submit" 
-            disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-colors disabled:opacity-70 mt-6"
-          >
-            {loading ? 'Processing...' : 'Proceed to Payment (Rs. 300)'}
-          </button>
-        </form>
-      </main>
+          <p className="text-center text-gray-500 text-xs mt-6">
+            By registering, you agree to our terms and conditions. <br/> Payments are securely processed via PayU.
+          </p>
+        </div>
     </div>
   );
 }
