@@ -54,8 +54,8 @@ export async function generateQRAndSendEmail(ticket: { id: string; name: string;
 
             <div style="border-top: 1px dashed #4a5568; padding: 20px; background-color: #0f172a;">
               <p style="margin: 0; color: #718096; font-size: 12px;">
-                DATE: DEC 31, 2026<br/>
-                TIME: 9:00 PM TILL DAWN
+                DATE: SEP 12, 2026<br/>
+                TIME: 10:30 AM ONWARDS
               </p>
             </div>
           </div>

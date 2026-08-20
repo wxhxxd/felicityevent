@@ -17,7 +17,7 @@ export default function Home() {
 
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto mt-20">
           <div className="inline-block mb-4 px-6 py-2 rounded-full border border-fuchsia-500/30 bg-fuchsia-500/10 backdrop-blur-md">
-            <span className="text-fuchsia-300 font-semibold tracking-widest text-sm uppercase">The Biggest Night of the Year</span>
+            <span className="text-fuchsia-300 font-semibold tracking-widest text-sm uppercase">The Biggest Event of the Year</span>
           </div>
           
           <h1 className="text-6xl md:text-8xl font-black mb-6 tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-400 via-purple-400 to-cyan-400 drop-shadow-[0_0_15px_rgba(232,121,249,0.5)]">
@@ -25,7 +25,7 @@ export default function Home() {
           </h1>
           
           <p className="text-xl md:text-2xl text-gray-300 mb-12 font-light leading-relaxed max-w-2xl mx-auto">
-            Experience the ultimate celebration. Unforgettable music, crazy vibes, and a night that will echo in eternity. Only 500 tickets available.
+            Experience the ultimate celebration. Unforgettable music, crazy vibes, and an experience that will echo in eternity.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
@@ -40,12 +40,12 @@ export default function Home() {
 
           <div className="mt-16 grid grid-cols-3 gap-4 border-t border-white/10 pt-8 max-w-2xl mx-auto text-gray-400 font-mono text-sm">
             <div>
-              <p className="text-white font-bold text-xl">DEC 31</p>
+              <p className="text-white font-bold text-xl">SEP 12</p>
               <p>2026</p>
             </div>
             <div>
-              <p className="text-white font-bold text-xl">9:00 PM</p>
-              <p>TILL DAWN</p>
+              <p className="text-white font-bold text-xl">10:30 AM</p>
+              <p>ONWARDS</p>
             </div>
             <div>
               <p className="text-white font-bold text-xl">SECRET</p>
