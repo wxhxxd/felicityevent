@@ -3,10 +3,15 @@ import { prisma } from '@/lib/prisma';
 
 export async function POST(request: Request) {
   try {
-    const { id } = await request.json();
+    const { id, pin } = await request.json();
 
     if (!id) {
       return NextResponse.json({ error: 'Ticket ID is required' }, { status: 400 });
+    }
+
+    const ADMIN_PIN = process.env.ADMIN_PIN || '6878';
+    if (pin !== ADMIN_PIN) {
+      return NextResponse.json({ error: 'Invalid Admin PIN' }, { status: 401 });
     }
 
     const ticket = await prisma.ticket.findUnique({
