@@ -1,14 +1,18 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-// The PayU Payment Link provided by the user
-const PAYU_PAYMENT_LINK = 'https://u.payu.in/PAYUMN/TrA2ZlyOhr3Y';
+const PAYMENT_LINKS = {
+  'basic': 'https://u.payu.in/PAYUMN/LrpLU8Lt5fYZ',
+  'stage': 'https://u.payu.in/PAYUMN/JIjbFik1bp0h',
+  'vip': 'https://u.payu.in/PAYUMN/sJQ9hJjpLRlS'
+};
+
 const MAX_TICKETS = 500;
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, phone } = body;
+    const { name, email, phone, ticketType, referralCode, amountPaid } = body;
 
     if (!name || !email || !phone) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -35,17 +39,32 @@ export async function POST(request: Request) {
       // Update details just in case
       await prisma.ticket.update({
         where: { email },
-        data: { name, phone, status: 'PENDING' }
+        data: { 
+          name, 
+          phone, 
+          status: 'PENDING',
+          referralCode: referralCode || null,
+          amountPaid: amountPaid ? parseFloat(amountPaid) : null
+        }
       });
     } else {
       // Create new pending ticket
       await prisma.ticket.create({
-        data: { name, email, phone, status: 'PENDING' }
+        data: { 
+          name, 
+          email, 
+          phone, 
+          status: 'PENDING',
+          referralCode: referralCode || null,
+          amountPaid: amountPaid ? parseFloat(amountPaid) : null
+        }
       });
     }
 
+    const paymentUrl = PAYMENT_LINKS[ticketType as keyof typeof PAYMENT_LINKS] || PAYMENT_LINKS['basic'];
+
     // Return success and the payment link
-    return NextResponse.json({ paymentUrl: PAYU_PAYMENT_LINK }, { status: 200 });
+    return NextResponse.json({ paymentUrl }, { status: 200 });
     
   } catch (error) {
     console.error('Registration Error:', error);

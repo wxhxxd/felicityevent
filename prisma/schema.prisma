@@ -11,12 +11,14 @@ datasource db {
 }
 
 model Ticket {
-  id        String   @id @default(cuid())
-  name      String
-  email     String   @unique
-  phone     String
-  status    String   @default("PENDING") // PENDING, SUCCESS
-  scanned   Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  phone        String
+  status       String   @default("PENDING") // PENDING, SUCCESS
+  scanned      Boolean  @default(false)
+  referralCode String?
+  amountPaid   Float?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
