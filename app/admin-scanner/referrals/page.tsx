@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma';
+import AuthWrapper from './AuthWrapper';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,7 +29,8 @@ export default async function ReferralsDashboard() {
   });
 
   return (
-    <main className="min-h-screen bg-gray-900 flex flex-col items-center p-6 text-white">
+    <AuthWrapper>
+      <main className="min-h-screen bg-gray-900 flex flex-col items-center p-6 text-white">
       <div className="w-full max-w-4xl mt-10">
         <div className="flex justify-between items-center mb-10">
           <h1 className="text-3xl font-bold tracking-tight">Referral Dashboard</h1>
@@ -83,5 +85,6 @@ export default async function ReferralsDashboard() {
         </p>
       </div>
     </main>
+    </AuthWrapper>
   );
 }
